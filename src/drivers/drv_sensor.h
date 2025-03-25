@@ -248,6 +248,9 @@
 #define DRV_BARO_DEVTYPE_AUAV		0xE7
 #define DRV_BARO_DEVTYPE_SPA06          0xE8
 
+#define DRV_ADC_DEVTYPE_ADS7830		0xEA
+
+
 #define DRV_DEVTYPE_UNUSED		0xff
 
 #endif /* _DRV_SENSOR_H */

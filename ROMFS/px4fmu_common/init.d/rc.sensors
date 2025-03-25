@@ -239,3 +239,9 @@ then
 	# start last (wait for possible icm20948 passthrough mode)
 	ak09916 -X -q start
 fi
+
+# ADS7830 ADC
+if param compare -s SENS_EN_ADS7830 1
+then
+	ads7830 start -X
+fi
