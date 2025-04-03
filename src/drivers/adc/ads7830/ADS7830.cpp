@@ -83,7 +83,10 @@ void ADS7830::RunImpl()
 
 		if (channel_index < PX4_MAX_ADC_CHANNELS) {
 			_regulator_report.channel_id[channel_index] = static_cast<int>(channel_index);
-			_regulator_report.raw_data[channel_index] = value;
+			_regulator_report.raw_data[channel_index] = value; // Publish raw value
+			_analogue_value = value;
+			//Convert 0-255 to between  0-Vref, then mulitply by scale factor to get regulator voltage
+			_regulator_report.voltage[channel_index] = (static_cast<float>(_analogue_value)) * 0.0722f; // 1/(51*0.27125)
 		}
 
 	} else {

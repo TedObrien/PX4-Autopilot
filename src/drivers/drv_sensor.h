@@ -250,7 +250,6 @@
 
 #define DRV_ADC_DEVTYPE_ADS7830		0xEA
 
-
 #define DRV_DEVTYPE_UNUSED		0xff
 
 #endif /* _DRV_SENSOR_H */

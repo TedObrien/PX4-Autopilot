@@ -49,7 +49,7 @@ protected:
 private:
 	uORB::PublicationMulti<regulator_report_s> _regulator_report_pub{ORB_ID(regulator_report)};
 
-	static const hrt_abstime SAMPLE_INTERVAL{100_ms};
+	static const hrt_abstime SAMPLE_INTERVAL{200_ms};
 	regulator_report_s _regulator_report{};
 	perf_counter_t _cycle_perf;
 	perf_counter_t _comms_errors;
@@ -59,11 +59,12 @@ private:
 		A0 = 0, A1, A2, A3, A4, A5, A6, A7
 	};
 	hrt_abstime _last_successful_measurement{0};
-	static constexpr hrt_abstime MEASUREMENT_TIMEOUT_US = 1000_ms;
+	static constexpr hrt_abstime MEASUREMENT_TIMEOUT_US = 2000_ms;
 	bool  _already_connected{false};
 	int setChannel(ChannelSelection ch);
 	int readConversionResult(uint8_t *value);
 	ChannelSelection cycleMeasure(int16_t *value);
+	int _analogue_value{0};
 
 
 };
