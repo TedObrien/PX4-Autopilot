@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include <drivers/device/i2c.h>
 #include <px4_platform_common/i2c_spi_buses.h>
-#include <uORB/topics/adc7830_report.h>
+#include <uORB/topics/regulator_report.h>
 #include <uORB/PublicationMulti.hpp>
 #include <lib/perf/perf_counter.h>
 #include <drivers/drv_hrt.h>
@@ -44,27 +44,26 @@ public:
 	int probe() override;
 
 protected:
-	void print_status() override;
-	void exit_and_cleanup() override;
+	void print_status();
 
 private:
-	uORB::PublicationMulti<adc7830_report_s> _to_adc7830_report{ORB_ID(adc7830_report)};
+	uORB::PublicationMulti<regulator_report_s> _regulator_report_pub{ORB_ID(regulator_report)};
+
 	static const hrt_abstime SAMPLE_INTERVAL{100_ms};
-	adc7830_report_s _adc7830_report{};
+	regulator_report_s _regulator_report{};
 	perf_counter_t _cycle_perf;
 	perf_counter_t _comms_errors;
 	int _channel_cycle_count{0};
-
 	enum ChannelSelection {
 		Invalid = -1,
 		A0 = 0, A1, A2, A3, A4, A5, A6, A7
 	};
-
 	hrt_abstime _last_successful_measurement{0};
 	static constexpr hrt_abstime MEASUREMENT_TIMEOUT_US = 1000_ms;
 	bool  _already_connected{false};
-
 	int setChannel(ChannelSelection ch);
 	int readConversionResult(uint8_t *value);
 	ChannelSelection cycleMeasure(int16_t *value);
+
+
 };

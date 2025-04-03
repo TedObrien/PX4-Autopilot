@@ -45,7 +45,6 @@ set(msg_files
 	ActuatorServosTrim.msg
 	ActuatorTest.msg
 	AdcReport.msg
-	Adc7830Report.msg
 	Airspeed.msg
 	AirspeedWind.msg
 	AutotuneAttitudeControlStatus.msg
@@ -182,6 +181,18 @@ set(msg_files
 	RoverSteeringSetpoint.msg
 	RoverThrottleSetpoint.msg
 	RoverVelocityStatus.msg
+	RegisterExtComponentReply.msg
+	RegisterExtComponentRequest.msg
+	RegulatorReport.msg
+	RoverAckermannGuidanceStatus.msg
+	RoverAckermannSetpoint.msg
+	RoverAckermannStatus.msg
+	RoverDifferentialGuidanceStatus.msg
+	RoverDifferentialSetpoint.msg
+	RoverDifferentialStatus.msg
+	RoverMecanumGuidanceStatus.msg
+	RoverMecanumSetpoint.msg
+	RoverMecanumStatus.msg
 	Rpm.msg
 	RtlStatus.msg
 	RtlTimeEstimate.msg
