@@ -49,7 +49,8 @@ void ADS7830::print_usage()
 		R"DESCR_STR(
 ### Description
 
-Driver to enable an external ADS7830 8 channel ADC connected via I2C. Used by Airial UAS to monitor voltages of regulators.
+Driver to enable an external ADS7830 8 channel ADC connected via I2C.
+Used by Airial UAS to monitor voltages of regulators.
 
 It is enabled/disabled using the
 [ADC_ADS7830_EN]
