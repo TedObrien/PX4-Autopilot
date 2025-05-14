@@ -137,6 +137,8 @@ int ADS7830::init()
 		return ret;
 	}
 
+	_regulator_report_pub.advertise();
+
 	px4_usleep(10000); // Sleep for 10ms after turning REF ON
 	PX4_DEBUG("succesfully init i2c");
 
