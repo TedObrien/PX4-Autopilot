@@ -86,7 +86,7 @@ void ADS7830::RunImpl()
 			_regulator_report.raw_data[channel_index] = value; // Publish raw value
 			_analogue_value = value;
 			//Convert 0-255 to between  0-Vref, then mulitply by scale factor to get regulator voltage
-			_regulator_report.voltage[channel_index] = (static_cast<float>(_analogue_value)) * 0.0722f; // 1/(51*0.27125)
+			_regulator_report.voltage[channel_index] = (static_cast<float>(_analogue_value)) * 0.06f;
 		}
 
 	} else {
