@@ -61,6 +61,7 @@
 #include "checks/parachuteCheck.hpp"
 #include "checks/powerCheck.hpp"
 #include "checks/rcCalibrationCheck.hpp"
+#include "checks/regulatorCheck.hpp"
 #include "checks/sdcardCheck.hpp"
 #include "checks/systemCheck.hpp"
 #include "checks/batteryCheck.hpp"
@@ -147,6 +148,7 @@ private:
 	ParachuteChecks _parachute_checks;
 	PowerChecks _power_checks;
 	RcCalibrationChecks _rc_calibration_checks;
+	RegulatorChecks _regulator_checks;
 	SdCardChecks _sd_card_checks;
 	SystemChecks _system_checks;
 	BatteryChecks _battery_checks;
@@ -189,6 +191,7 @@ private:
 		&_parachute_checks,
 		&_power_checks,
 		&_rc_calibration_checks,
+		&_regulator_checks,
 		&_sd_card_checks,
 		&_system_checks, // must be after _estimator_checks & _home_position_checks
 		&_battery_checks,

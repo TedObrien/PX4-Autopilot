@@ -690,6 +690,17 @@ PARAM_DEFINE_INT32(COM_FLT_PROFILE, 0);
 PARAM_DEFINE_INT32(COM_ARM_CHK_ESCS, 0);
 
 /**
+ * Enable checks on voltage regulators
+ *
+ * If this parameter is set, the system will check the regulator_report message.
+ * This is developed by AirialUAS to check regulators are working correctly.
+ *
+ * @group Commander
+ * @boolean
+ */
+PARAM_DEFINE_INT32(COM_ARM_CHK_REGS, 0);
+
+/**
  * Condition to enter prearmed mode
  *
  * Condition to enter the prearmed state, an intermediate state between disarmed and armed

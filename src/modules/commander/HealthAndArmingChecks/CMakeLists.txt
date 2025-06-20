@@ -63,6 +63,7 @@ px4_add_library(health_and_arming_checks
 	checks/powerCheck.cpp
 	checks/rcAndDataLinkCheck.cpp
 	checks/rcCalibrationCheck.cpp
+	checks/regulatorCheck.cpp
 	checks/sdcardCheck.cpp
 	checks/systemCheck.cpp
 	checks/vtolCheck.cpp
