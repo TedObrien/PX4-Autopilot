@@ -48,15 +48,11 @@ public:
 	void checkAndReport(const Context &context, Report &reporter) override;
 
 private:
-	// void checkRegulatorReport(const Context &context, Report &reporter, const regulator_report_s &regulator_report);
 	void checkRegulatorVoltages(const Context &context, Report &reporter, const regulator_report_s &regulator_report);
 	uORB::Subscription _regulator_report_sub{ORB_ID(regulator_report)};
 
 	const hrt_abstime _start_time{hrt_absolute_time()};
-
-	// float  expected_voltages[12] = {5.3f, 5.0f, 7.5f, 0.0f, 5.3f, 0.f, 7.5f, 0.f, 0.f, 0.f, 0.f, 0.f};
-	float  expected_voltages[12] = {14.4f, 14.4f, 14.4f, 14.4f, 14.4f, 14.4f, 14.4f, 14.4f, 0.f, 0.f, 0.f, 0.f};
-
+	float  expected_voltages[12] = {5.3f, 5.f, 7.5f, 12.f, 5.3f, 0.f, 7.5f, 0.f, 0.f, 0.f, 0.f, 0.f}; // Requires specific arrangement of regulators to work
 	DEFINE_PARAMETERS_CUSTOM_PARENT(HealthAndArmingCheckBase,
 					(ParamBool<px4::params::COM_ARM_CHK_REGS>) _param_regulators_checks_required
 				       )
