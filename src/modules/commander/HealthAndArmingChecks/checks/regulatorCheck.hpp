@@ -1,7 +1,7 @@
 
 /****************************************************************************
  *
- *   Copyright (c) 2022 PX4 Development Team. All rights reserved.
+ *   Copyright (c) 2025 PX4 Development Team. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -52,7 +52,7 @@ private:
 	uORB::Subscription _regulator_report_sub{ORB_ID(regulator_report)};
 
 	const hrt_abstime _start_time{hrt_absolute_time()};
-	float  expected_voltages[12] = {5.3f, 5.f, 7.5f, 12.f, 5.3f, 0.f, 7.5f, 0.f, 0.f, 0.f, 0.f, 0.f}; // Requires specific arrangement of regulators to work
+	const float expected_voltages[12] = {5.3f, 5.f, 7.5f, 12.f, 5.3f, 0.f, 7.5f, 0.f, 0.f, 0.f, 0.f, 0.f}; // Requires specific arrangement of regulators to work
 	DEFINE_PARAMETERS_CUSTOM_PARENT(HealthAndArmingCheckBase,
 					(ParamBool<px4::params::COM_ARM_CHK_REGS>) _param_regulators_checks_required
 				       )

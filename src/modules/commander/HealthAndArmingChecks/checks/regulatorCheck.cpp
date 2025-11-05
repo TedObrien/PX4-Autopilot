@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- *   Copyright (c) 2022 PX4 Development Team. All rights reserved.
+ *   Copyright (c) 2025 PX4 Development Team. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -42,14 +42,15 @@ void RegulatorChecks::checkAndReport(const Context &context, Report &reporter)
 
 	regulator_report_s regulator_report;
 
-	if (_regulator_report_sub.copy(&regulator_report) && (now < regulator_report.timestamp + regulator_telemetry_timeout)) {
+	if (_regulator_report_sub.copy(&regulator_report) && (now < regulator_report.timestamp + regulator_telemetry_timeout)
+	    && _param_regulators_checks_required.get()) {
 
 		checkRegulatorVoltages(context, reporter, regulator_report);
 
 		reporter.setIsPresent(health_component_t::regulators);
 
 	} else if (_param_regulators_checks_required.get()
-		   && now - _start_time > 5_s) { // Wait a bit after startup to allow regulator's to init
+		   && now - _start_time > 5_s) { // Wait a bit after startup to allow regulators to init
 
 		/* EVENT
 		 * @description
@@ -69,6 +70,9 @@ void RegulatorChecks::checkAndReport(const Context &context, Report &reporter)
 void RegulatorChecks::checkRegulatorVoltages(const Context &context, Report &reporter,
 		const regulator_report_s &regulator_report)
 {
+	//  Ensure that future changes do not cause any out-of-bounds access
+	static_assert(sizeof(expected_voltages) / sizeof(expected_voltages[0]) ==
+		      sizeof(regulator_report.voltage) / sizeof(regulator_report.voltage[0]), "Array size mismatch");
 
 	for (size_t index = 0; index < (sizeof(regulator_report.voltage) / sizeof(regulator_report.voltage[0])); index++) {
 		if (fabsf(regulator_report.voltage[index] - expected_voltages[index]) > 1.0f) { //Check if more than 1V deviation
@@ -87,8 +91,6 @@ void RegulatorChecks::checkRegulatorVoltages(const Context &context, Report &rep
 			if (reporter.mavlink_log_pub()) {
 				mavlink_log_critical(reporter.mavlink_log_pub(), "Preflight Fail: Regulator %d voltage fault", (int)index);
 			}
-
 		}
 	}
-
 }
