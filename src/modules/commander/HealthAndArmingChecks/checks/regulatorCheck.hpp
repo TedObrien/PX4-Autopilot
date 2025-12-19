@@ -53,6 +53,7 @@ private:
 
 	const hrt_abstime _start_time{hrt_absolute_time()};
 	const float expected_voltages[12] = {5.3f, 5.f, 7.5f, 12.f, 5.3f, 0.f, 7.5f, 0.f, 0.f, 0.f, 0.f, 0.f}; // Requires specific arrangement of regulators to work
+	uint8_t _consecutive_violations[12] = {};
 	DEFINE_PARAMETERS_CUSTOM_PARENT(HealthAndArmingCheckBase,
 					(ParamBool<px4::params::COM_ARM_CHK_REGS>) _param_regulators_checks_required
 				       )

@@ -77,20 +77,31 @@ void RegulatorChecks::checkRegulatorVoltages(const Context &context, Report &rep
 	for (size_t index = 0; index < (sizeof(regulator_report.voltage) / sizeof(regulator_report.voltage[0])); index++) {
 		if (fabsf(regulator_report.voltage[index] - expected_voltages[index]) > 1.0f) { //Check if more than 1V deviation
 
-			/* EVENT
-			 * @description
-			 * <profile name="dev">
-			 * This check can be configured via <param>COM_ARM_CHK_REGS</param> parameter.
-			 * </profile>
-			 */
-			reporter.healthFailure<uint8_t, float, float>(NavModes::All, health_component_t::regulators,
-					events::ID("check_regulator_voltages"),
-					events::Log::Critical, "Regulator {1} voltage fault: {2:.1}V (expected {3:.1}V)",
-					(uint8_t)index, regulator_report.voltage[index], expected_voltages[index]);
-
-			if (reporter.mavlink_log_pub()) {
-				mavlink_log_critical(reporter.mavlink_log_pub(), "Preflight Fail: Regulator %d voltage fault", (int)index);
+			if (_consecutive_violations[index] < 255) {
+				_consecutive_violations[index]++;
 			}
+
+			// Only report if voltage has persisted across multiple sensor readings
+			// sensor running at 5Hz, reg check at 10Hz
+			if (_consecutive_violations[index] >= 5) {
+				/* EVENT
+				 * @description
+				 * <profile name="dev">
+				 * This check can be configured via <param>COM_ARM_CHK_REGS</param> parameter.
+				 * </profile>
+				 */
+				reporter.healthFailure<uint8_t, float, float>(NavModes::All, health_component_t::regulators,
+						events::ID("check_regulator_voltages"),
+						events::Log::Critical, "Regulator {1} voltage fault: {2:.1}V (expected {3:.1}V)",
+						(uint8_t)index, regulator_report.voltage[index], expected_voltages[index]);
+
+				if (reporter.mavlink_log_pub()) {
+					mavlink_log_critical(reporter.mavlink_log_pub(), "Preflight Fail: Regulator %d voltage fault", (int)index);
+				}
+			}
+
+		} else {
+			_consecutive_violations[index] = 0;
 		}
 	}
 }
